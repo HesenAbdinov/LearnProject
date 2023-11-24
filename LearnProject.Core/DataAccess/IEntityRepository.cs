@@ -13,6 +13,8 @@ namespace LearnProject.Core.DataAccess
         //SİNXRON
         T Add(T entity);
 
+        T AddSaveChanges(T entity);
+
         T Update(T entity);
 
         void Delete(T entity);

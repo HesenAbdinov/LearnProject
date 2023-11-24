@@ -24,5 +24,5 @@ namespace LearnProject.Business.Abstract
         List<Product> GetAll();
 
         List<Product> GetByCategoryId(int id);
-    }
+    } 
 }

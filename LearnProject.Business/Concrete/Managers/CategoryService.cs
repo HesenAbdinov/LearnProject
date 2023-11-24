@@ -51,5 +51,10 @@ namespace LearnProject.Business.Concrete.Managers
         {
             return _categoryRepository.Get(d => d.Id == id);
         }
+
+        public Category AddSaveChanges(Category category)
+        {
+            return _categoryRepository.AddSaveChanges(category);
+        }
     }
 }

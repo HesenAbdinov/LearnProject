@@ -11,6 +11,8 @@ namespace LearnProject.Business.Abstract
     {
         Category Add(Category category);
 
+        Category AddSaveChanges(Category category);
+
         Task<Category> AddAsync(Category category);
 
         Category Update(Category category);

@@ -4,19 +4,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!-- Styles Files and Links List Start-->
+@section Styles{
 
+}
+<!-- Styles Files and Links List End-->
+<!-- Header Navbar Menu Start-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">List Of Categories</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarNavDarkDropdown">
+            <ul class="navbar-nav">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Operations Menu
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#category-adding-modal">Action</a></li>
+                        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#test">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Header Navbar Menu End -->
+<!-- Category Table Start -->
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box table-responsive">
-            <div class="dropdown pull-right">
-                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="zmdi zmdi-more-vert"></i>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#category-adding-modal">Add</a></li>
-                </ul>
-            </div>
-            <h4 class="header-title m-t-0 m-b-30">List of Categories</h4>
             <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
                     <thead>
@@ -39,7 +59,8 @@
                                 <td>@category.IsActive</td>
                                 <td>@category.AddedBy</td>
                                 <td>@category.AddedDate</td>
-                                <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#category-updating-modal" onclick="editCategory(@category.Id)"></button>Edit</td>
+                                <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#category-updating-modal-1" onclick="editCategory(@category.Id)">Modify</button></td>
+                                <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#test" onclick="editCategory(@category.Id)">Modify t</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteCategory(@category.Id)">Delete</button></td>
                             </tr>
                         }
@@ -49,90 +70,23 @@
         </div>
     </div>
 </div>
-@*
-<!-- Editable table -->
-<div class="card">
-    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-        Editable table
-    </h3>
-    <div class="col-sm-12">
-        <div class="card-box table-responsive">
-            <div class="dropdown pull-right">
-                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
-                    <i class="zmdi zmdi-more-vert"></i>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#category-adding-modal">Add</a></li>
-                </ul>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-<div class="card-body">
-    <div id="table" class="table-editable">
-        <span class="table-add float-right mb-3 mr-2">
-            <a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a>
-        </span>
-        <table class="table table-bordered table-responsive-md table-striped text-center">
-            <thead>
-                <tr>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Added By</th>
-                    <th class="text-center">Added Date</th>
-                    <th class="text-center">Sort</th>
-                    <th class="text-center">Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var category in Model.Categories)
-                {
-                    <tr>
-                        <td class="pt-3-half" contenteditable="true">@category.Id</td>
-                        <td class="pt-3-half" contenteditable="true">@category.Name</td>
-                        <td class="pt-3-half" contenteditable="true">@category.IsActive</td>
-                        <td class="pt-3-half" contenteditable="true">@category.AddedBy</td>
-                        <td class="pt-3-half" contenteditable="true">@category.AddedDate</td>
-                        <td class="pt-3-half">
-                            <span class="table-up">
-                                <a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a>
-                            </span>
-                            <span class="table-down">
-                                <a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a>
-                            </span>
-                        </td>
-                        <td>
-                            <span class="table-remove">
-                                <button type="button" class="btn btn-danger btn-rounded btn-sm my-0">
-                                    Remove
-                                </button>
-                            </span>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-<!-- Editable table --> *@
-
-@* <div id="category-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<!-- Category Table End -->
+<!-- Modal Add Category Start -->
+<div id="category-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <form asp-controller="Category" asp-action="Add" method="post">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                     <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Add Category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="field-1" class="control-label">Name</label>
-                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="field-1" placeholder="Konveksiyonel Fırın">
+                                <label for="Name" class="control-label">Name</label>
+                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="Name" placeholder="For example: T-Shirt">
+                                <span asp-for="Name"></span>
                             </div>
                         </div>
                     </div>
@@ -144,4 +98,192 @@
             </div>
         </form>
     </div>
-</div><!--/.modal --> *@
+</div>
+<!-- Modal Add Category End -->
+﻿
+<!-- Modal Update Category Start -->
+@* <div id="category-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Category" asp-action="Edit" method="post">
+            <input asp-for="@Model.Category.Id" id="categoryId" hidden />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-refresh"></i> Update category</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Name</label>
+                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="categoryName" placeholder="Konveksiyonel Fırın">
+                            </div>
+                        </div>
+                    </div></br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group no-margin">
+                                <label for="IsActive" class="form-check-label">Is Active -  </label>
+                                <input asp-for="@Model.Category.IsActive" class="form-check-input" type="checkbox" id="categoryIsActive" value="categoryIsActive.value" />
+                                <div id="checkbox-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> *@
+<!-- Modal Update Category End -->
+
+<div class="modal fade" id="category-updating-modal-1" tabindex="-1" data-backdrop="false">
+    <div class="modal-dialog">
+        <form asp-controller="Category" asp-action="Edit" method="post">
+            <input asp-for="@Model.Category.Id" id="categoryId" hidden />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Disabled Backdrop</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Name</label>
+                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="categoryName" placeholder="Konveksiyonel Fırın">
+                                @* <input asp-for="@Model.Category.IsActive" type="text" class="form-control" id="categoryIsActive" /> *@
+                            </div>
+                        </div>
+                    </div></br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group no-margin">
+                                <label for="IsActive" class="form-check-label">Is Active -  </label>
+                                <input asp-for="@Model.Category.IsActive" class="form-check-input" type="checkbox" bind="Model.Category.IsActive" id="categoryIsActive" />
+                                <p>@Model.Category</p>
+                                @* <input type="checkbox" id="isActiveCheckbox" bind="@Model.Category.IsActive" /> *@
+                                @* value="categoryIsActive" checked="checked"  *@
+                                <div id="checkbox-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Different Test Modal Start -->
+<div class="modal fade" id="test" tabindex="-1" role="dialog" aria-labelledby="test" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Password</label>
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Address 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <select id="inputState" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                Check me out
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Different Test Modal End -->
+<!-- SCRIPTS List Start -->
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript">
+        function editCategory(id) {
+            console.log("editCategory Method called id=", id);
+
+            $.get("/Category/Edit", { id: id }).done(function (category) {
+                console.log("Category = ", category);
+                $('#categoryId').val(category.id);
+                $('#categoryName').val(category.name);
+                $('#categoryIsActive').val(category.isActive);
+                var test = categoryIsActive;
+                $('#category-updating-modal').modal("show");
+                console.log("categoryIsActive = ", categoryIsActive.value);
+            });
+        }
+    </script>
+    <script>
+        $("#categoryIsActive").on('change', function () {
+            console.log("categoryIsActive = ", categoryIsActive.value);
+            if ($(this).is(':checked')) {
+                $(this).attr('value', 'true');
+            } else {
+                $(this).attr('value', 'false');
+            }
+
+            $('#checkbox-value').text($('#categoryIsActive').val());
+        });
+    </script>
+}
+<!-- SCRIPTS List End -->
+<!-- jQuery SCRIPTS List Start -->
+<!-- jQuery SCRIPTS List End -->

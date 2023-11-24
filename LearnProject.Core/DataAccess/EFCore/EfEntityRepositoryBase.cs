@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace LearnProject.Core.DataAccess.EFCore
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class,IEntity, new()
+        where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
         //private readonly TContext _context = new TContext();
@@ -19,7 +19,7 @@ namespace LearnProject.Core.DataAccess.EFCore
             using (var context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
-                addedEntity.State= EntityState.Added;
+                addedEntity.State = EntityState.Added;
                 return entity;
             }
         }
@@ -39,7 +39,7 @@ namespace LearnProject.Core.DataAccess.EFCore
             using (var context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
-                addedEntity.State= EntityState.Added;
+                addedEntity.State = EntityState.Added;
                 await context.SaveChangesAsync();
                 return entity;
             }
@@ -50,7 +50,7 @@ namespace LearnProject.Core.DataAccess.EFCore
             using (var context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
-                deletedEntity.State= EntityState.Deleted;
+                deletedEntity.State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }
@@ -60,7 +60,7 @@ namespace LearnProject.Core.DataAccess.EFCore
             using (var context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
-                deletedEntity.State= EntityState.Deleted;
+                deletedEntity.State = EntityState.Deleted;
                 await context.SaveChangesAsync();
             }
         }
@@ -89,7 +89,7 @@ namespace LearnProject.Core.DataAccess.EFCore
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter = null)
         {
-            using(var context = new TContext())
+            using (var context = new TContext())
             {
                 return context.Set<TEntity>().SingleOrDefault(filter);
             }
