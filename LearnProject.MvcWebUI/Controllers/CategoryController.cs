@@ -11,7 +11,7 @@ namespace LearnProject.MvcWebUI.Controllers
         private readonly ILogger<CategoryController> _logger;
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ILogger<CategoryController> logger,ICategoryService categoryService)
+        public CategoryController(ILogger<CategoryController> logger, ICategoryService categoryService)
         {
             _logger = logger;
             _categoryService = categoryService;
@@ -38,7 +38,7 @@ namespace LearnProject.MvcWebUI.Controllers
 
         public IActionResult Add(CategoryViewModel categoryViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var categoryForAdd = new Category
                 {
@@ -53,9 +53,10 @@ namespace LearnProject.MvcWebUI.Controllers
                     _categoryService.AddSaveChanges(categoryForAdd);
                     return RedirectToAction("GetCategories");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Error");
+                    _logger.LogWarning("Xeta bas verdi", ex);
+                    throw ex;
                 }
             }
             return RedirectToAction("GetCategories");
@@ -63,25 +64,25 @@ namespace LearnProject.MvcWebUI.Controllers
         [HttpGet]
         public JsonResult Edit(int id)
         {
-            if(id==0)
+            if (id > 0)
             {
-                return Json(0);
+                var category = _categoryService.GetById(id);
+                if (category == null)
+                {
+                    return Json(0);
+                }
+                return Json(category);
             }
-            var category = _categoryService.GetById(id);
-            if(category == null)
-            {
-                return Json(0);
-            }
-            return Json(category);
+            return Json(0);
         }
 
         [HttpPost]
-        public IActionResult Edit (CategoryViewModel categoryViewModel)
+        public IActionResult Edit(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
-                var categoryIsValid= _categoryService.GetById(categoryViewModel.Category.Id);
-                
+                var categoryIsValid = _categoryService.GetById(categoryViewModel.Category.Id);
+
                 if (categoryIsValid == null)
                 {
                     return RedirectToAction("GetCategories");
@@ -99,13 +100,32 @@ namespace LearnProject.MvcWebUI.Controllers
                     _categoryService.Update(categoryForEdit);
                     return RedirectToAction("GetCategories");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return RedirectToAction("GetCategories");
-
+                    throw ex;
                 }
             }
             return RedirectToAction("GetCategories");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            if (id == 0) { return Json(0); }
+
+            var categoryForDelete = _categoryService.GetById(id);
+            if (categoryForDelete == null)
+            {
+                return Json(0);
+            }
+            try
+            {
+                _categoryService.Delete(categoryForDelete);
+                return RedirectToAction("GetCategories");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

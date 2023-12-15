@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LearnProject.Business.Concrete.Managers
 {
@@ -55,6 +56,17 @@ namespace LearnProject.Business.Concrete.Managers
         public Category AddSaveChanges(Category category)
         {
             return _categoryRepository.AddSaveChanges(category);
+        }
+
+        public List<SelectListItem> GelCategoriestForSelectbox()
+        {
+            List<SelectListItem> categories = (from category in _categoryRepository.GetAll()
+                                               select new SelectListItem
+                                               {
+                                                   Value = category.Id.ToString(),
+                                                   Text = category.Name
+                                               }).ToList();
+            return categories;
         }
     }
 }

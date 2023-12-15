@@ -5,7 +5,7 @@
 }
 
 <!-- Styles Files and Links List Start-->
-@section Styles{
+@section Styles {
 
 }
 <!-- Styles Files and Links List End-->
@@ -23,7 +23,7 @@
                         Operations Menu
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#category-adding-modal">Action</a></li>
+                        <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#category-adding-modal">Add Category</a></li>
                         <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#test">Another action</a></li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
@@ -60,7 +60,6 @@
                                 <td>@category.AddedBy</td>
                                 <td>@category.AddedDate</td>
                                 <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#category-updating-modal-1" onclick="editCategory(@category.Id)">Modify</button></td>
-                                <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#test" onclick="editCategory(@category.Id)">Modify t</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteCategory(@category.Id)">Delete</button></td>
                             </tr>
                         }
@@ -100,45 +99,7 @@
     </div>
 </div>
 <!-- Modal Add Category End -->
-﻿
-<!-- Modal Update Category Start -->
-@* <div id="category-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <form asp-controller="Category" asp-action="Edit" method="post">
-            <input asp-for="@Model.Category.Id" id="categoryId" hidden />
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="fa fa-refresh"></i> Update category</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="Name" class="control-label">Name</label>
-                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="categoryName" placeholder="Konveksiyonel Fırın">
-                            </div>
-                        </div>
-                    </div></br>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group no-margin">
-                                <label for="IsActive" class="form-check-label">Is Active -  </label>
-                                <input asp-for="@Model.Category.IsActive" class="form-check-input" type="checkbox" id="categoryIsActive" value="categoryIsActive.value" />
-                                <div id="checkbox-value"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div> *@
-<!-- Modal Update Category End -->
+
 
 <div class="modal fade" id="category-updating-modal-1" tabindex="-1" data-backdrop="false">
     <div class="modal-dialog">
@@ -249,7 +210,7 @@
 </div>
 <!-- Different Test Modal End -->
 <!-- SCRIPTS List Start -->
-@section Scripts{
+@section Scripts {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -265,9 +226,23 @@
                 $('#categoryId').val(category.id);
                 $('#categoryName').val(category.name);
                 $('#categoryIsActive').val(category.isActive);
+                // $('#category-updating-modal').modal("show");
+                
                 var test = categoryIsActive;
-                $('#category-updating-modal').modal("show");
                 console.log("categoryIsActive = ", categoryIsActive.value);
+            });
+        }
+
+        function deleteCategory(id) {
+            $.get("/Category/Delete", { id: id }).done(function (result) {
+                if (result == 0) {
+                    console.log("Xeta!... Proses icra oluna bilmedi!");
+                    // swal("Xeta!", "Proses icra oluna bilmedi!", "warning");
+                }
+                else {
+                    console.log("Ugurlu!... Proses icra olundu!");
+                    // swal("Ugurlu!", "Proses icra olundu!", "success");
+                }
             });
         }
     </script>

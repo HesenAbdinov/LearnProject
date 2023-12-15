@@ -9,10 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
+//Services inject
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+//Repository inject
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

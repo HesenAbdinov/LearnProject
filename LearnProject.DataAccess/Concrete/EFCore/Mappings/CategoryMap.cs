@@ -18,10 +18,12 @@ namespace LearnProject.DataAccess.Concrete.EFCore.Mappings
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Name).HasColumnName("Name");
-            builder.Property(c => c.AddedDate).HasColumnName("AddedDate");
-            builder.Property(c => c.AddedBy).HasColumnName("AddedBy");
-            builder.Property(c => c.IsActive).HasColumnName("IsActive");
 
+            builder.Property(c => c.AddedDate).HasColumnName("AddedDate");
+
+            builder.Property(c => c.AddedBy).HasColumnName("AddedBy");
+
+            builder.Property(c => c.IsActive).HasColumnName("IsActive");
         }
     }
 }
