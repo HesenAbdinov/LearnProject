@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace LearnProject.Business.Abstract
 {
@@ -24,5 +25,7 @@ namespace LearnProject.Business.Abstract
         Category GetById(int id);
 
         List<Category> GetAll();
+
+        List<SelectListItem> GelCategoriestForSelectbox();
     }
 }

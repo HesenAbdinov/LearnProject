@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,9 +25,30 @@ namespace LearnProject.DataAccess.Concrete.EFCore.DataBaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration<Category>(new CategoryMap());
-            modelBuilder.ApplyConfiguration<Product>(new ProductMap());
-        }
+            modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
 
+            //modelBuilder.Entity<Product>()
+            //.HasKey(p => p.Id); // Primary key belirtme
+
+            //modelBuilder.Entity<Product>()
+            //    .Property(p => p.Name)
+            //    .IsRequired(); // Zorunlu alan belirtme
+
+            //modelBuilder.Entity<Product>()
+            //    .HasOne(p => p.Category) // Product sınıfının bir Category'si olmalıdır
+            //    .WithMany(c => c.Products) // Category sınıfının birden fazla Product'ı olabilir
+            //    .HasForeignKey(p => p.CategoryID); // Foreign key belirtme
+
+            // Category sınıfı için mapping
+            //modelBuilder.Entity<Category>()
+            //    .HasKey(c => c.Id);
+
+            //modelBuilder.Entity<Category>()
+            //    .Property(c => c.Name)
+            //    .IsRequired();
+
+            //modelBuilder.Entity<Product>();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace LearnProject.Business.Concrete.Managers
         }
         public Product Add(Product product)
         {
-            return _productRepository.Add(product);
+            return _productRepository.AddSaveChanges(product);
         }
 
         public async Task<Product> AddAsync(Product product)
@@ -36,14 +36,24 @@ namespace LearnProject.Business.Concrete.Managers
             return _productRepository.GetAll();
         }
 
+        public List<Product> GetAllWithCategory()
+        {
+            return _productRepository.GetAllWithCategory();
+        }
+
         public List<Product> GetByCategoryId(int id)
         {
-            return _productRepository.GetAll(d => d.CategoryID == id);
+            return _productRepository.GetAll(p => p.CategoryID == id);
         }
 
         public Product GetById(int id)
         {
-            return _productRepository.Get(d => d.Id == id);
+            return _productRepository.Get(p => p.Id == id);
+        }
+
+        public Product GetByName(string name)
+        {
+            return _productRepository.Get(p => p.Name == name);
         }
 
         public Product Update(Product product)
