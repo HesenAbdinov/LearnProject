@@ -60,7 +60,7 @@
                                 <td>@category.AddedBy</td>
                                 <td>@category.AddedDate</td>
                                 <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#category-updating-modal-1" onclick="editCategory(@category.Id)">Modify</button></td>
-                                <td align="center"><button class="btn btn-danger" onclick="deleteCategory(@category.Id)">Delete</button></td>
+                                <td align="center"><button class="btn btn-danger" onclick="deleteCategoryWithAlert(@category.Id)">Delete</button></td>
                             </tr>
                         }
                     </tbody>
@@ -242,6 +242,40 @@
                 else {
                     console.log("Ugurlu!... Proses icra olundu!");
                     // swal("Ugurlu!", "Proses icra olundu!", "success");
+                }
+            });
+        }       ﻿
+
+        function deleteCategoryWithAlert(id) {
+            // SweetAlert 2 kullanımı
+            Swal.fire({
+                title: "Silmək istədiyinizdən əminsiniz?",
+                text: "Silinən məlumatlar bir daha göstərilə bilməz!",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "İptal",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Bəli, silinsin!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Silme işlemi için AJAX isteği gönder
+                    $.get("/Category/Delete/", { id: id })
+                        .done(function (result) {
+                            // Silme işlemi başarılıysa
+                            if (result === 1) {
+                                Swal.fire("Uğurlu!", "Əməliyyat müvəffəqiyyətlə gerçekleştirildi!", "success");
+                                // Sayfayı yenile
+                                location.reload();
+                            } else {
+                                // Silme işlemi başarısızsa
+                                Swal.fire("Uğursuz!", "Silinme zamanı bir xəta baş verdi!", "warning");
+                            }
+                        })
+                        .fail(function () {
+                            // AJAX isteği başarısızsa
+                            Swal.fire("Uğursuz!", "Naməlum xəta baş verdi!", "warning");
+                        });
                 }
             });
         }

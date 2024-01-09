@@ -1,12 +1,15 @@
-using LearnProject.Business.Abstract;
+﻿using LearnProject.Business.Abstract;
 using LearnProject.Business.Concrete.Managers;
 using LearnProject.DataAccess.Abstract;
 using LearnProject.DataAccess.Concrete.EFCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMvc();
+//builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 //Services inject
@@ -17,6 +20,27 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+{
+    //o.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+    //o.LoginPath = "/Login/Login";
+    //o.LogoutPath = "/Account/LogOut";
+    //o.AccessDeniedPath = "/Account/Denied"; //Role uyğun olmadıqda yonelmeni temin edecekdir.
+    //o.SlidingExpiration = true;
+});
+
+//[AllowAnonymous] Atributu verilməyən hər bir Controller-in action-larına girişə icazə verilmir
+builder.Services.AddMvc(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+
+    // Explicitly specify the constructor with AuthorizationPolicy parameter
+    var authorizeFilter = new AuthorizeFilter(policy);
+    config.Filters.Add(authorizeFilter);
+});
 
 var app = builder.Build();
 
@@ -33,10 +57,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "{controller}/{action",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "{controller}/{action}",
+    pattern: "{controller=Login}/{action=Login}");
 
 app.Run();

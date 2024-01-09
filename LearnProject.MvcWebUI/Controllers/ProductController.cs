@@ -32,7 +32,7 @@ namespace LearnProject.MvcWebUI.Controllers
 
         public IActionResult Add(ProductViewModel productViewModel)
         {
-            if (ModelState.IsValid && productViewModel.Product.Id > 0)
+            if (ModelState.IsValid)
             {
                 var productIsValid = _productService.GetByName(productViewModel.Product.Name);
                 if (productIsValid != null)
@@ -133,7 +133,7 @@ namespace LearnProject.MvcWebUI.Controllers
             try
             {
                 _productService.Delete(productForDelete);
-                return RedirectToAction("GetProducts");
+                return Json(1);
             }
             catch (Exception ex)
             {

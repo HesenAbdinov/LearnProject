@@ -37,6 +37,10 @@ namespace LearnProject.DataAccess.Concrete.EFCore.Mappings
                 .HasOne(p => p.Category) // Product sınıfının bir Category'si olmalıdır
                 .WithMany(c => c.Products) // Category sınıfının birden fazla Product'ı olabilir
                 .HasForeignKey(p => p.CategoryID); // Foreign key belirtme
+
+            builder.HasOne(p => p.InsertedUser)
+               .WithMany(u => u.Products)
+               .HasForeignKey(p => p.InsertedUserId);
         }
     }
 }
