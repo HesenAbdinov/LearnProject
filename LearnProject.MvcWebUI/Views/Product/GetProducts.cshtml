@@ -74,7 +74,7 @@ else
                                     <td>@product.Width</td>
                                     <td>@product.Width</td>
                                     <td align="center"><button class="btn btn-info rounded-pill" data-toggle="modal" data-target="#product-updating-modal" onclick="editProduct(@product.Id)">Modify</button></td>
-                                    <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Delete</button></td>
+                                    <td align="center"><button class="btn btn-danger" onclick="deleteProductWithAlert(@product.Id)">Delete</button></td>
                                 </tr>
                             }
                         </tbody>
@@ -231,13 +231,46 @@ else
             $.get("/Product/Delete", { id: id }).done(function (result) {
                 if (result == 0) {
                     console.log("Xeta!... Proses icra oluna bilmedi!");
-                    // swal("Xeta!", "Proses icra oluna bilmedi!", "warning");
                 }
                 else {
                     console.log("Ugurlu!... Proses icra olundu!");
-                    // swal("Ugurlu!", "Proses icra olundu!", "success");
                 }
             });
         }
+        
+        function deleteProductWithAlert(id) {
+            // SweetAlert 2 kullanımı
+            Swal.fire({
+                title: "Silmək istədiyinizdən əminsiniz?",
+                text: "Silinən məlumatlar bir daha göstərilə bilməz!",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "İptal",
+                confirmButtonClass: "btn-warning",
+                confirmButtonText: "Bəli, silinsin!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Silme işlemi için AJAX isteği gönder
+                    $.get("/Product/Delete/", { id: id })
+                        .done(function (result) {
+                            // Silme işlemi başarılıysa
+                            if (result === 1) {
+                                Swal.fire("Uğurlu!", "Əməliyyat müvəffəqiyyətlə gərçəkləştirildi!", "success");
+                                // Sayfayı yenile
+                                location.reload();
+                            } else {
+                                // Silme işlemi başarısızsa
+                                Swal.fire("Uğursuz!", "Silinme zamanı bir xəta baş verdi!", "warning");
+                            }
+                        })
+                        .fail(function () {
+                            // AJAX isteği başarısızsa
+                            Swal.fire("Uğursuz!", "Naməlum xəta baş verdi!", "warning");
+                        });
+                }
+            });
+        }
+
     </script>
 }

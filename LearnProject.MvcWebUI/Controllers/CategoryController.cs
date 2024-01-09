@@ -120,7 +120,7 @@ namespace LearnProject.MvcWebUI.Controllers
             try
             {
                 _categoryService.Delete(categoryForDelete);
-                return RedirectToAction("GetCategories");
+                return Json(1);
             }
             catch (Exception ex)
             {

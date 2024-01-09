@@ -22,11 +22,15 @@ namespace LearnProject.DataAccess.Concrete.EFCore.DataBaseContext
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CategoryMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
+            //modelBuilder.ApplyConfiguration(new UserMap());
 
             //modelBuilder.Entity<Product>()
             //.HasKey(p => p.Id); // Primary key belirtme

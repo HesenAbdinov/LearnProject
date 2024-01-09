@@ -11,6 +11,11 @@ namespace LearnProject.Entity.Concrete
 {
     public class Product : IEntity
     {
+        public Product()
+        {
+            this.InsertedUser = new User();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -32,5 +37,11 @@ namespace LearnProject.Entity.Concrete
         public DateTime AddedDate { get; set; }
                 
         public Category? Category { get; set; }
+
+        [ForeignKey("InsertedUserId")]
+        public Guid? InsertedUserId { get; set; }
+
+        public User? InsertedUser { get; set; }
+
     }
 }
